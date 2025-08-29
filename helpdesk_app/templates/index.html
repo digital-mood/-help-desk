@@ -1,23 +1,129 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplicación Help Desk</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .container { max-width: 800px; margin: auto; }
-        h1, h2 { color: #333; }
-        form { margin-bottom: 20px; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
-        input[type="text"], textarea { width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box; }
-        button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .abierto { color: red; font-weight: bold; }
-        .resuelto { color: green; font-weight: bold; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h1,
+        h2 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .nuevo {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .en-revision,
+        .en-espera {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        .en-progreso {
+            color: #fd7e14;
+            font-weight: bold;
+        }
+
+        .resuelto {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .cerrado {
+            color: #6c757d;
+            font-weight: bold;
+        }
+
+        .reabierto {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .btn-group a {
+            text-decoration: none;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Help Desk de la Empresa</h1>
@@ -26,11 +132,18 @@
         <form action="/create_ticket" method="POST">
             <label for="title">Título del Problema:</label>
             <input type="text" id="title" name="title" required>
-            
+
             <label for="description">Descripción:</label>
             <textarea id="description" name="description" rows="4" required></textarea>
-            
-            <button type="submit">Crear Ticket</button>
+
+            <label for="group_id">Asignar a Grupo:</label>
+            <select id="group_id" name="group_id">
+                {% for group in groups %}
+                <option value="{{ group.id }}">{{ group.name }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="btn btn-secondary">Crear Ticket</button>
         </form>
 
         <h2>Tickets Existentes</h2>
@@ -39,7 +152,8 @@
                 <tr>
                     <th>ID</th>
                     <th>Título</th>
-                    <th>Descripción</th>
+                    <th>Grupo</th>
+                    <th>Asignado a</th>
                     <th>Estado</th>
                     <th>Acción</th>
                 </tr>
@@ -47,14 +161,45 @@
             <tbody>
                 {% for ticket in tickets %}
                 <tr>
-                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.id.split('-')[0] }}...</td>
                     <td>{{ ticket.title }}</td>
-                    <td>{{ ticket.description }}</td>
-                    <td><span class="{{ ticket.status }}">{{ ticket.status }}</span></td>
+                    <td>{{ group_map.get(ticket.group_id, 'N/A') }}</td>
+                    <td>{{ employee_map.get(ticket.assigned_to, 'Sin asignar') }}</td>
+                    <td><span class="{{ ticket.status | replace(' ', '-') }}">{{ ticket.status }}</span></td>
                     <td>
-                        {% if ticket.status == 'abierto' %}
-                            <a href="{{ url_for('close_ticket', ticket_id=ticket.id) }}"><button>Marcar como Resuelto</button></a>
+                        {% if not ticket.assigned_to %}
+                        <form action="{{ url_for('assign_ticket', ticket_id=ticket.id) }}" method="POST"
+                            style="display:inline-block;">
+                            <select name="employee_id">
+                                {% for employee in employees %}
+                                {% if employee.group_id == ticket.group_id %}
+                                <option value="{{ employee.id }}">{{ employee.name }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-warning">Asignar</button>
+                        </form>
                         {% endif %}
+
+                        {% for next_status in get_next_status(ticket.status) %}
+                        <span class="btn-group">
+                            <a href="{{ url_for('update_status', ticket_id=ticket.id, new_status=next_status) }}">
+                                {% if next_status == 'en revision' %}
+                                <button class="btn btn-warning">{{ next_status | title }}</button>
+                                {% elif next_status == 'en progreso' %}
+                                <button class="btn btn-success">{{ next_status | title }}</button>
+                                {% elif next_status == 'en espera' %}
+                                <button class="btn btn-warning">{{ next_status | title }}</button>
+                                {% elif next_status == 'resuelto' %}
+                                <button class="btn btn-success">{{ next_status | title }}</button>
+                                {% elif next_status == 'cerrado' %}
+                                <button class="btn btn-danger">{{ next_status | title }}</button>
+                                {% elif next_status == 'reabierto' %}
+                                <button class="btn btn-info">{{ next_status | title }}</button>
+                                {% endif %}
+                            </a>
+                        </span>
+                        {% endfor %}
                     </td>
                 </tr>
                 {% endfor %}
@@ -62,4 +207,5 @@
         </table>
     </div>
 </body>
+
 </html>

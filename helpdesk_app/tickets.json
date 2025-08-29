@@ -1,14 +1,18 @@
 [
     {
-        "id": "e441434c-2831-487b-8c7c-40f4e42a034d",
-        "title": "Problema con la impresora",
-        "description": "La impresora no enciende y el cable de poder est\u00c3\u00a1 conectado.",
-        "status": "abierto"
+        "id": "b8ced4c9-a8de-49bd-b3d8-60fee3a81f1e",
+        "title": "UNO",
+        "description": "UNO",
+        "status": "cerrado",
+        "group_id": "g-003",
+        "assigned_to": "e-004"
     },
     {
-        "id": "57fd6afa-db7b-4d1d-8a79-62d47f422a50",
-        "title": "Prueba 1",
-        "description": "test json nuevo ticket",
-        "status": "abierto"
+        "id": "a093fc3a-d94b-4784-b38b-4479fd15bc20",
+        "title": "2",
+        "description": "2",
+        "status": "en progreso",
+        "group_id": "g-002",
+        "assigned_to": "e-003"
     }
 ]

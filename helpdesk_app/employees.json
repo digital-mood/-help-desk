@@ -1,0 +1,38 @@
+{
+  "groups": [
+    {
+      "id": "g-001",
+      "name": "Soporte Tecnico"
+    },
+    {
+      "id": "g-002",
+      "name": "Recursos Humanos"
+    },
+    {
+      "id": "g-003",
+      "name": "Finanzas"
+    }
+  ],
+  "employees": [
+    {
+      "id": "e-001",
+      "name": "Carlos",
+      "group_id": "g-001"
+    },
+    {
+      "id": "e-002",
+      "name": "Ana",
+      "group_id": "g-001"
+    },
+    {
+      "id": "e-003",
+      "name": "Luis",
+      "group_id": "g-002"
+    },
+    {
+      "id": "e-004",
+      "name": "Sofia",
+      "group_id": "g-003"
+    }
+  ]
+}
