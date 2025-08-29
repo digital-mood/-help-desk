@@ -1,0 +1,14 @@
+[
+    {
+        "id": "e441434c-2831-487b-8c7c-40f4e42a034d",
+        "title": "Problema con la impresora",
+        "description": "La impresora no enciende y el cable de poder est\u00c3\u00a1 conectado.",
+        "status": "abierto"
+    },
+    {
+        "id": "57fd6afa-db7b-4d1d-8a79-62d47f422a50",
+        "title": "Prueba 1",
+        "description": "test json nuevo ticket",
+        "status": "abierto"
+    }
+]
