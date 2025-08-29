@@ -21,6 +21,7 @@ Sigue estos sencillos pasos para poner en marcha la aplicación en tu entorno lo
 Asegúrate de tener Python instalado en tu sistema.
 
 2. Configuración del proyecto
+
 Crea una nueva carpeta para el proyecto y navega hasta ella en tu terminal.
 
     > Bash
@@ -31,9 +32,9 @@ Crea una nueva carpeta para el proyecto y navega hasta ella en tu terminal.
 
     ``Instala las librerías necesarias: Flask y uuid.``
 
-> Bash
+    > Bash
 
-``pip install Flask uuid``
+    ``pip install Flask uuid``
 
 3. Estructura de archivos
 Crea los siguientes archivos y carpetas dentro de la carpeta principal del proyecto:
