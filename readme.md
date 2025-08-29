@@ -25,15 +25,14 @@ Crea una nueva carpeta para el proyecto y navega hasta ella en tu terminal.
 
 > Bash
 
-``
-mkdir helpdesk_app
-cd helpdesk_app
-Instala las librerías necesarias: Flask y uuid.
-``
+``mkdir helpdesk_app``
+``cd helpdesk_app``
+``Instala las librerías necesarias: Flask y uuid.``
 
-Bash
+> Bash
 
-pip install Flask uuid
+``pip install Flask uuid``
+
 3. Estructura de archivos
 Crea los siguientes archivos y carpetas dentro de la carpeta principal del proyecto:
 
