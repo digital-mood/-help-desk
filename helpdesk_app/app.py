@@ -51,6 +51,7 @@ def create_ticket():
     title = request.form['title']
     description = request.form['description']
     group_id = request.form['group_id']
+    ticket_type = request.form['ticket_type']
     
     new_ticket = {
         'id': str(uuid.uuid4()),
@@ -58,7 +59,8 @@ def create_ticket():
         'description': description,
         'status': 'nuevo',
         'group_id': group_id,
-        'assigned_to': None
+        'assigned_to': None,
+        'ticket_type': ticket_type # Nuevo campo
     }
     tickets = load_data('tickets.json')
     tickets.append(new_ticket)

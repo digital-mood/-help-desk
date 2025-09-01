@@ -143,6 +143,14 @@
                 {% endfor %}
             </select>
 
+            <label for="ticket_type">Tipo de Ticket:</label>
+            <select id="ticket_type" name="ticket_type" required>
+                <option value="incidencia">Incidencia</option>
+                <option value="solicitud">Solicitud</option>
+                <option value="consulta">Consulta</option>
+                <option value="mejora">Mejora</option>
+            </select>
+
             <button type="submit" class="btn btn-secondary">Crear Ticket</button>
         </form>
 
@@ -152,6 +160,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Título</th>
+                    <th>Tipo</th>
                     <th>Grupo</th>
                     <th>Asignado a</th>
                     <th>Estado</th>
@@ -163,6 +172,7 @@
                 <tr>
                     <td>{{ ticket.id.split('-')[0] }}...</td>
                     <td>{{ ticket.title }}</td>
+                    <td>{{ ticket.get('ticket_type', 'N/A') | title }}</td>
                     <td>{{ group_map.get(ticket.group_id, 'N/A') }}</td>
                     <td>{{ employee_map.get(ticket.assigned_to, 'Sin asignar') }}</td>
                     <td><span class="{{ ticket.status | replace(' ', '-') }}">{{ ticket.status }}</span></td>

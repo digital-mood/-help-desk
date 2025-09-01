@@ -11,8 +11,26 @@
         "id": "a093fc3a-d94b-4784-b38b-4479fd15bc20",
         "title": "2",
         "description": "2",
-        "status": "en progreso",
+        "status": "en espera",
         "group_id": "g-002",
         "assigned_to": "e-003"
+    },
+    {
+        "id": "f775eece-46b4-4a34-a476-dbebbf80e7b0",
+        "title": "cvbcvb",
+        "description": "cvbcvvb",
+        "status": "en revision",
+        "group_id": "g-001",
+        "assigned_to": "e-001",
+        "ticket_type": "solicitud"
+    },
+    {
+        "id": "dba3debb-d3a9-4587-8cc4-5360d274a8df",
+        "title": ".m,.m",
+        "description": "m,.m,.",
+        "status": "en progreso",
+        "group_id": "g-003",
+        "assigned_to": "e-004",
+        "ticket_type": "solicitud"
     }
 ]
